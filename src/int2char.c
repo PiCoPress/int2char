@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 				"\tconvert INTEGER to UTF-8 - negatives (< 0) and larges (>= 2,097,152) will be ignored.\n");
 		return 0;
 	}
-	int i, rpt = 1, errc = 0;
+	int i, rpt = 1;
 	while(rpt < argc)
 	{
 		long long int i = atoll(argv[rpt]);
