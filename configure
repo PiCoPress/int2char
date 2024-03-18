@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# index:
+# 	0. Config				==> line 10
+# 	1. fallback function	==> line 14
+# 	2. help_ function		==> line 29
+# 	3. enjoy_this fucntion	==> line 41
+# 	3. main logic			==> line 47
+
+### Configurations
+	BUILD_PATH_i2c='./bin/'
+###
+
+fallback() {
+	case $1 in 
+		1 ) #	GCC
+			echo "Make sure install GCC"
+			;;
+		2 ) #	Rust
+			echo "No rust compiler found. Please install Rustlang at https://www.rust-lang.org"
+			;;
+		3 ) # Java
+			
+			;;
+		esac
+		exit 2;
+}
+
+help_() {	#HLP
+	echo -e "configure [ACTION] [LANGUAGE]"								"\n\n" \
+		"Actions:"														"\n\t" \
+			"compile, com"	"\t" "Compile specified language code."		"\n\t" \
+			"build, bu"		"\t" "alias for compile"					"\n\n" \
+		"Languages:"													"\n\t" \
+			"c, C"			"\t\t" "Compile with GCC"					"\n\t" \
+			"rust, rs"		"\t" "Compile with Rust"					"\n\n" \
+		"help, -h ..."		"\t\t" "Print this message."					"\n\n" \
+		"int2char will support all compute languages on the Earth. I calls it is VILLAIN :>"
+}
+
+enjoy_this() {	# EJT
+	echo "$1 build completed. Enjoy!"
+}
+
+# Process given parameters
+# PRM
+case $1 in
+	[cC]ompile | [bB]uild | com | bu )
+		case $2 in
+			[cC] )
+				which gcc > /dev/null && gcc src/int2char.c -o $BUILD_PATH_i2c/int2char-c || fallback 1
+				enjoy_this GCC
+				;;
+			[rR][sS] | [rR]ust )
+				which rustc > /dev/null && rustc src/int2char.rs -o $BUILD_PATH_i2c/int2char-rs -C strip=debuginfo || fallback 2
+				enjoy_this Rust
+				;;
+			
+			* )
+				echo "?Unknowen language:" $2
+				exit 1
+				;;
+		esac
+		;;
+	help | h | --help | -h | -help )
+		help_
+		exit 1;
+		;;
+	* )
+		echo -e "Invalid or no command was given. \n" \
+			"Please type 'help' to see a guide."
+		exit 1;
+		;;
+esac
+
+
