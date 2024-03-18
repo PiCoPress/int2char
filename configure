@@ -35,7 +35,7 @@ help_() {	#HLP
 			"c, C"			"\t\t" "Compile with GCC"					"\n\t" \
 			"rust, rs"		"\t" "Compile with Rust"					"\n\n" \
 		"help, -h ..."		"\t\t" "Print this message."					"\n\n" \
-		"int2char will support all compute languages on the Earth. I calls it is VILLAIN :>"
+		"int2char will support all compute languages on the Earth. I call it is VILLAIN :>"
 }
 
 enjoy_this() {	# EJT
