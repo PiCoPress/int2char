@@ -65,5 +65,5 @@ fn string_to_natural(str: &String) -> Option<u32> {
         });
         count += 1;
     }
-    return Some(sum);
+    Some(sum)
 }
