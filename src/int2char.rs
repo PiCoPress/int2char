@@ -14,24 +14,32 @@ fn main() {
     for element in &args[1..] {
         match string_to_natural(&element) {
             Some(t) => {
-                if t < 256 {
-                    print!("{}", t as u8 as char);
-                } else if t < 2048 {
-                    let arr = [(192 + (t >> 6)) as u8, (128 + t % 64) as u8,0,0];
-                    print!("{}", String::from_utf8_lossy(&arr));
-                } else if t < 65536 {
-                    let arr = [(224 + (t >> 12)) as u8 , (128 + (t >> 6) % 64) as u8, (128 + t % 64) as u8,0];
-                    print!("{}", String::from_utf8_lossy(&arr));
-                } else if t < 2097152 {
-                    let arr = [(240 + (t >> 18)) as u8 , (128 + (t >> 12) % 64) as u8, (128 + (t >> 6) % 64) as u8, (128 + t % 64) as u8];
-                    print!("{}", String::from_utf8_lossy(&arr));
-                } else {
-                    eprintln!("Too large: {t}");
+                match t {
+                    ..=255 => print!("{}", t as u8 as char),
+                    ..=2048 => {
+                        let arr = [(192 + (t >> 6)) as u8, (128 + t % 64) as u8];
+                        print!("{}", String::from_utf8_lossy(&arr));
+                    },
+                    ..=65535 => {
+                        let arr = [(224 + (t >> 12)) as u8,
+                            (128 + (t >> 6) % 64) as u8,
+                            (128 + t % 64) as u8];
+                        print!("{}", String::from_utf8_lossy(&arr));
+                    },
+                    ..=2097151 => {
+                       let arr = [(240 + (t >> 18)) as u8,
+                            (128 + (t >> 12) % 64) as u8,
+                            (128 + (t >> 6) % 64) as u8,
+                            (128 + t % 64) as u8];
+                        print!("{}", String::from_utf8_lossy(&arr));
+                    },
+                    _ => {
+                        eprintln!("Too large: {t}");
+                    }
                 }
-                0
-            },
-            None => 0,
-        };
+            }
+            None => {}
+        }
     }
 
     exit(0);
