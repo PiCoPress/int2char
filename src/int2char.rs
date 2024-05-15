@@ -16,7 +16,7 @@ fn main() {
             Some(t) => {
                 match t {
                     ..=255 => print!("{}", t as u8 as char),
-                    ..=2048 => {
+                    ..=2047 => {
                         let arr = [(192 + (t >> 6)) as u8, (128 + t % 64) as u8];
                         print!("{}", String::from_utf8_lossy(&arr));
                     },
